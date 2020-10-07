@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +19,7 @@ namespace DataLogic.DataAccess
             var builder = new DbContextOptionsBuilder<AppDbContext>();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseInMemoryDatabase("testdb");
+            builder.UseSqlServer(connectionString);
 
             return new AppDbContext(builder.Options);
         }

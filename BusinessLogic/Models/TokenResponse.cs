@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BusinessLogic.Models
+﻿namespace BusinessLogic.Models
 {
     public class TokenResponse
     {

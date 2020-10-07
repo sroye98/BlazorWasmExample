@@ -20,5 +20,7 @@
   <ItemGroup>
     <Folder Include="DataAccess\" />
     <Folder Include="Entities\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
 </Project>

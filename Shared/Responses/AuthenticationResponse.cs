@@ -1,5 +1,4 @@
-﻿using System;
-namespace Shared.Responses
+﻿namespace Shared.Responses
 {
     public class AuthenticationResponse
     {

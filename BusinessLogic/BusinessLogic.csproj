@@ -14,6 +14,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Helpers\" />
     <Folder Include="Settings\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.8" />

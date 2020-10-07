@@ -7,12 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
-using DataLogic.Entities;
+using BusinessLogic.Settings;
 using DataLogic.DataAccess;
+using DataLogic.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using BusinessLogic.Settings;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services
 {

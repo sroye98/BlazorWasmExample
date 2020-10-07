@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BusinessLogic.Settings
+﻿namespace BusinessLogic.Settings
 {
     public class SecuritySettings
     {

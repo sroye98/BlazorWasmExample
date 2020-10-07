@@ -19,7 +19,7 @@ namespace DataLogic.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("BusinessLogic.Models.AppRole", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,10 +44,10 @@ namespace DataLogic.Migrations
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("AppRoles");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppRoleClaim", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppRoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,10 +68,10 @@ namespace DataLogic.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("AppRoleClaims");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUser", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,10 +141,10 @@ namespace DataLogic.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AppUsers");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserClaim", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,10 +165,10 @@ namespace DataLogic.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AppUserClaims");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserLogin", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(256)")
@@ -188,10 +188,10 @@ namespace DataLogic.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AppUserLogins");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserRole", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -206,7 +206,7 @@ namespace DataLogic.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserToken", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserToken", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -224,55 +224,101 @@ namespace DataLogic.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AppUserTokens");
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppRoleClaim", b =>
+            modelBuilder.Entity("DataLogic.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("BusinessLogic.Models.AppRole", "Role")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReplacedByToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RevokedByIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("DataLogic.Entities.AppRoleClaim", b =>
+                {
+                    b.HasOne("DataLogic.Entities.AppRole", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserClaim", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserClaim", b =>
                 {
-                    b.HasOne("BusinessLogic.Models.AppUser", "User")
+                    b.HasOne("DataLogic.Entities.AppUser", "User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserLogin", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserLogin", b =>
                 {
-                    b.HasOne("BusinessLogic.Models.AppUser", "User")
+                    b.HasOne("DataLogic.Entities.AppUser", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserRole", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserRole", b =>
                 {
-                    b.HasOne("BusinessLogic.Models.AppRole", "Role")
+                    b.HasOne("DataLogic.Entities.AppRole", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BusinessLogic.Models.AppUser", "User")
+                    b.HasOne("DataLogic.Entities.AppUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BusinessLogic.Models.AppUserToken", b =>
+            modelBuilder.Entity("DataLogic.Entities.AppUserToken", b =>
                 {
-                    b.HasOne("BusinessLogic.Models.AppUser", "User")
+                    b.HasOne("DataLogic.Entities.AppUser", "User")
                         .WithMany("Tokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataLogic.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("DataLogic.Entities.AppUser", "User")
+                        .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
