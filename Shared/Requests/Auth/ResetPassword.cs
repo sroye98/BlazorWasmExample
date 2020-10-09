@@ -1,17 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Requests
+namespace Shared.Requests.Auth
 {
-    public class Login
+    public class ResetPassword
     {
-        public Login()
+        public ResetPassword()
         {
         }
 
-        [Required, DataType(DataType.Text)]
+        [Required]
         public string Identifier { get; set; }
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        public string Token { get; set; }
     }
 }

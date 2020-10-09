@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Requests
+namespace Shared.Requests.Auth
 {
-    public class SendEmailToken
+    public class ForgotPassword
     {
-        public SendEmailToken()
+        public ForgotPassword()
         {
         }
 
-        [Required, RegularExpression(@"\[\[(TOKEN)\]\]", ErrorMessage = "Must contain [[TOKEN]] in the Url")]
-        public string EmailUrlTemplate { get; set; }
+        [Required, EmailAddress, DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
 
         [Required, EmailAddress, DataType(DataType.EmailAddress)]
         public string FromEmail { get; set; }
 
-        [Required]
+        [Required, RegularExpression(@"\[\[(TOKEN)\]\]", ErrorMessage = "Must contain [[TOKEN]] in the Url")]
+        public string UrlTemplate { get; set; }
+
         public string EmailSubject { get; set; }
 
         public Dictionary<string, string> EmailSubjectVariables { get; set; }
@@ -24,8 +26,5 @@ namespace Shared.Requests
         public string EmailMessage { get; set; }
 
         public Dictionary<string, string> EmailMessageVariables { get; set; }
-
-        [Required, EmailAddress, DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
     }
 }

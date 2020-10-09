@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BusinessLogic.Extensions;
-using BusinessLogic.Interfaces;
+using DataLogic.Extensions;
 using DataLogic.DataAccess;
+using DataLogic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BusinessLogic.Services
+namespace DataLogic.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {

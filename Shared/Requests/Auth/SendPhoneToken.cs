@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Requests
+namespace Shared.Requests.Auth
 {
-    public class Send2FAToken
+    public class SendPhoneToken
     {
-        public Send2FAToken()
+        public SendPhoneToken()
         {
         }
 
@@ -14,7 +14,7 @@ namespace Shared.Requests
 
         public Dictionary<string, string> PhoneMessageVariables { get; set; }
 
-        [Required]
-        public string Identifier { get; set; }
+        [Required, Phone, DataType(DataType.PhoneNumber)]
+        public string Phone { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace BusinessLogic.Extensions
+namespace DataLogic.Extensions
 {
     public static class Reflection
     {

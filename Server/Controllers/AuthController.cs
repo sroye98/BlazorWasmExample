@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shared.Requests;
-using Shared.Responses;
+using Shared.Requests.Auth;
+using Shared.Responses.Auth;
 
 namespace Server.Controllers
 {

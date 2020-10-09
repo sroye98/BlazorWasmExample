@@ -35,6 +35,10 @@ namespace DataLogic.DataAccess
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
+        public DbSet<Application> Applications { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -125,6 +129,11 @@ namespace DataLogic.DataAccess
                 b.Property(t => t.ClaimType).HasMaxLength(450);
 
                 b.ToTable("AppRoleClaims");
+            });
+
+            modelBuilder.Entity<Application>(b =>
+            {
+                b.HasOne(m => m.Employee);
             });
         }
     }

@@ -6,6 +6,8 @@ using BusinessLogic.Services;
 using BusinessLogic.Settings;
 using DataLogic.DataAccess;
 using DataLogic.Entities;
+using DataLogic.Interfaces;
+using DataLogic.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -104,6 +106,8 @@ namespace Server
             });
 
             services.AddHttpContextAccessor();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITokenService, TokenService>();

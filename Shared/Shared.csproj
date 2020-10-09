@@ -7,5 +7,10 @@
   <ItemGroup>
     <Folder Include="Requests\" />
     <Folder Include="Responses\" />
+    <Folder Include="Requests\Auth\" />
+    <Folder Include="Requests\Account\" />
+    <Folder Include="Responses\Auth\" />
+    <Folder Include="Requests\Employee\" />
+    <Folder Include="Requests\Common\" />
   </ItemGroup>
 </Project>

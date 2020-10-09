@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessLogic.Interfaces
+namespace DataLogic.Interfaces
 {
     public interface IEntity
     {

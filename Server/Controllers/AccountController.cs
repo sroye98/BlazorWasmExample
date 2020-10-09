@@ -4,7 +4,7 @@ using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shared.Requests;
+using Shared.Requests.Account;
 
 namespace Server.Controllers
 {

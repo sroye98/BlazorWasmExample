@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Requests
+namespace Shared.Requests.Auth
 {
-    public class RefreshToken
+    public class RevokeToken
     {
-        public RefreshToken()
+        public RevokeToken()
         {
         }
 
