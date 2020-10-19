@@ -140,7 +140,7 @@ namespace Server.Controllers
         }
 
         [Authorize]
-        [HttpDelete]
+        [HttpDelete("Logout")]
         public async Task<IActionResult> LogoutAsync()
         {
             try
@@ -156,7 +156,7 @@ namespace Server.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] Register payload)
         {
             try

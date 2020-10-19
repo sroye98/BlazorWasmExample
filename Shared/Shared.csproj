@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,5 +12,10 @@
     <Folder Include="Responses\Auth\" />
     <Folder Include="Requests\Employee\" />
     <Folder Include="Requests\Common\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Responses\Weather\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 </Project>

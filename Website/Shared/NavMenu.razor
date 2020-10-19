@@ -1,0 +1,96 @@
+﻿@inject NavigationManager NavigationManager
+@inject StateContainer StateContainer
+
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Bulma" />
+        </a>
+        <a role="button" class="navbar-burger burger @(StateContainer.ShowMenu)" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" @onclick="ToggleMobileMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu @(StateContainer.ShowMenu)">
+        <div class="navbar-start">
+            <NavLink class="navbar-item" href="/" ActiveClass="is-active" @onclick="@(e => GoTo("/"))">
+                Home
+            </NavLink>
+            <NavLink class="navbar-item" href="/counter" ActiveClass="is-active" @onclick="@(e => GoTo("/counter"))">
+                Counter
+            </NavLink>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                @context.User.Identity.Name
+                            </a>
+                            @if (context.User.IsInRole("administrator"))
+                            {
+                                <div class="navbar-dropdown">
+                                    <NavLink class="navbar-item" href="/fetchdata" ActiveClass="is-active" @onclick="@(e => GoTo("/fetchdata"))">
+                                        Fetch Data
+                                    </NavLink>
+                                    <a class="navbar-item">
+                                        Jobs
+                                    </a>
+                                    <a class="navbar-item">
+                                        Contact
+                                    </a>
+                                    <hr class="navbar-divider">
+                                    <a class="navbar-item" href="/logout">
+                                        Log Out
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="navbar-dropdown">
+                                    <NavLink class="navbar-item" href="/fetchdata" ActiveClass="is-active" @onclick="@(e => GoTo("/fetchdata"))">
+                                        Fetch Data
+                                    </NavLink>
+                                    <hr class="navbar-divider">
+                                    <NavLink class="navbar-item" href="/logout" @onclick="@(e => GoTo("/logout"))">
+                                        Log Out
+                                    </NavLink>
+                                </div>
+                            }
+                        </div>
+                    </Authorized>
+                    <NotAuthorized>
+                        <div class="buttons">
+                            <NavLink class="button is-primary" href="/signup" ActiveClass="is-active" @onclick="@(e => GoTo("/signup"))">
+                                Sign up
+                            </NavLink>
+                            <NavLink class="button is-light" href="/login" ActiveClass="is-active" @onclick="@(e => GoTo("/login"))">
+                                Log in
+                            </NavLink>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </div>
+</nav>
+
+@code {
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+    }
+
+    private void ToggleMobileMenu()
+    {
+        StateContainer.ToggleMenu();
+    }
+
+    private void GoTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+        StateContainer.HideMenu();
+    }
+}

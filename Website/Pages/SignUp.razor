@@ -1,0 +1,222 @@
+﻿@page "/signup"
+@using ViewModels 
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager 
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <p class="title">
+                Sign Up
+            </p>
+            <EditForm EditContext="editContext" OnSubmit="OnSignUpSubmitAsync">
+                <DataAnnotationsValidator />
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label>Name</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <CustomInputText class="input" type="text" placeholder="First Name" @bind-Value="signUpVM.FirstName" />
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.FirstName)" />
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <CustomInputText class="input" type="text" placeholder="Last Name" @bind-Value="signUpVM.LastName" />
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.LastName)" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label>Contact</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <CustomInputText class="input" type="email" placeholder="Email" @bind-Value="signUpVM.EmailAddress" />
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.EmailAddress)" />
+                            </p>
+                        </div>
+                        <div class="field is-expanded">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <a class="button is-static">
+                                        +1
+                                    </a>
+                                </p>
+                                <p class="control is-expanded">
+                                    <CustomInputText class="input" type="tel" placeholder="Phone" @bind-Value="signUpVM.PhoneNumber" />
+                                </p>
+                            </div>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.PhoneNumber)" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label>Account</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <CustomInputText class="input" type="text" placeholder="User Name" @bind-Value="signUpVM.UserName" />
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.UserName)" />
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <CustomInputText class="input" type="password" placeholder="Password" @bind-Value="signUpVM.Password" />
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.Password)" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label>Address</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <CustomInputText class="input" type="text" placeholder="Line 1" @bind-Value="signUpVM.Address.Line1" />
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-map"></i>
+                                </span>
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.Address.Line1)" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <CustomInputText class="input" type="text" placeholder="Line 2" @bind-Value="signUpVM.Address.Line2" />
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.Address.Line2)" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <CustomInputText class="input" type="text" placeholder="City" @bind-Value="signUpVM.Address.City" />
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-map-pin"></i>
+                                </span>
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.Address.City)" />
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <CustomInputText class="input" type="text" placeholder="State" @bind-Value="signUpVM.Address.State" />
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.Address.State)" />
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <CustomInputText class="input" type="text" placeholder="Zip" @bind-Value="signUpVM.Address.ZipCode" />
+                            </p>
+                            <p class="help is-danger">
+                                <ValidationMessage For="@(() => signUpVM.Address.ZipCode)" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <button class="button is-success">
+                                    Submit
+                                </button>
+                            </p>
+                            <p class="help is-danger">
+                                @(errorMessage)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+@code {
+    private SignUpViewModel signUpVM;
+    private EditContext editContext;
+    private string errorMessage;
+
+    protected override void OnInitialized()
+    {
+        OnResetSubmit();
+    }
+
+    async Task OnSignUpSubmitAsync()
+    {
+        bool isValid = editContext.Validate();
+
+        if (!isValid)
+        {
+            return;
+        }
+
+        string response = await signUpVM.OnSignUpSubmitAsync();
+
+        if (!string.IsNullOrEmpty(response))
+        {
+            errorMessage = response;
+            return;
+        }
+
+        OnResetSubmit();
+        NavigationManager.NavigateTo("/login");
+    }
+
+    void OnResetSubmit()
+    {
+        signUpVM = new SignUpViewModel(HttpClient);
+        editContext = new EditContext(signUpVM);
+    }
+}

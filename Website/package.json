@@ -1,0 +1,33 @@
+{
+  "name": "website",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "gulp sass"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~4.0.0",
+    "gulp-rename": "~2.0.0",
+    "gulp-sass": "~4.0.1",
+    "gulp-sourcemaps": "~2.6.4",
+    "node-sass": "~4.13.1"
+  },
+  "gulp-environment": {
+    "environments": [
+      {
+        "name": "development",
+        "aliases": [
+          "dev"
+        ]
+      },
+      {
+        "name": "production",
+        "aliases": [
+          "prod"
+        ]
+      }
+    ],
+    "default": "development"
+  }
+}

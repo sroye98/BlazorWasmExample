@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using BusinessLogic.Settings;
@@ -112,9 +113,13 @@ namespace Server
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ICommunicationService, CommunicationService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IServiceProvider svc)
         {
             if (env.IsDevelopment())
             {
@@ -145,6 +150,85 @@ namespace Server
             {
                 endpoints.MapControllers();
             });
+
+            CreateRoleAsync(
+                svc,
+                Shared.Constants.Roles.Administrator).GetAwaiter().GetResult();
+            CreateUserAsync(
+                svc,
+                "Saachi",
+                "Roye",
+                "saachi.roye@gmail.com",
+                "sroye98",
+                "7134802586",
+                "Saachir1!",
+                Shared.Constants.Roles.Administrator).GetAwaiter().GetResult();
+        }
+
+        private async Task<bool> CreateRoleAsync(
+            IServiceProvider serviceProvider,
+            string role)
+        {
+            RoleManager<AppRole> RoleManager = serviceProvider.GetRequiredService<RoleManager<AppRole>>();
+
+            var existingRole = await RoleManager.RoleExistsAsync(role);
+            if (existingRole)
+            {
+                return true;
+            }
+
+            IdentityResult roleResult = await RoleManager.CreateAsync(
+                new AppRole
+                {
+                    Name = role
+                });
+
+            return true;
+        }
+
+        private async Task<bool> CreateUserAsync(
+            IServiceProvider serviceProvider,
+            string firstName,
+            string lastName,
+            string email,
+            string username,
+            string phone,
+            string password,
+            string role)
+        {
+            UserManager<AppUser> UserManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+
+            var existingUser = await UserManager.FindByEmailAsync(email) ??
+                await UserManager.FindByNameAsync(username);
+
+            if (existingUser != null)
+            {
+                return true;
+            }
+
+            AppUser newUser = new AppUser
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                UserName = username,
+                PhoneNumber = phone
+            };
+
+            IdentityResult userResult = await UserManager.CreateAsync(
+                newUser,
+                password);
+
+            if (!userResult.Succeeded)
+            {
+                return false;
+            }
+
+            userResult = await UserManager.AddToRoleAsync(
+                newUser,
+                role);
+
+            return userResult.Succeeded;
         }
     }
 }

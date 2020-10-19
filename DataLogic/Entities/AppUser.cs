@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace DataLogic.Entities
@@ -10,8 +11,10 @@ namespace DataLogic.Entities
         {
         }
 
+        [Column(TypeName = "nvarchar(256)")]
         public string FirstName { get; set; }
 
+        [Column(TypeName = "nvarchar(256)")]
         public string LastName { get; set; }
 
         public string FullName { get => $"{FirstName} {LastName}"; }

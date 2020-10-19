@@ -1,0 +1,97 @@
+﻿@page "/login"
+@using ViewModels
+@inject HttpClient HttpClient 
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ILocalStorageService LocalStorageService
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <p class="title">
+                Log in
+            </p>
+            <EditForm EditContext="editContext" OnSubmit="OnLoginSubmitAsync">
+                <DataAnnotationsValidator />
+
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <CustomInputText class="input" type="text" placeholder="Email" @bind-Value="loginVM.Identifier" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    </p>
+                    <p class="help is-danger">
+                        <ValidationMessage For="@(() => loginVM.Identifier)" />
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <CustomInputText class="input" type="password" placeholder="Password" @bind-Value="loginVM.Password" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                    <p class="help is-danger">
+                        <ValidationMessage For="@(() => loginVM.Password)" />
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <button class="button is-success">
+                            Login
+                        </button>
+                    </p>
+                    <p class="help is-danger">
+                        @(errorMessage)
+                    </p>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    private LoginViewModel loginVM;
+    private EditContext editContext;
+    private string errorMessage;
+
+    protected override void OnInitialized()
+    {
+        OnResetSubmit();
+    }
+
+    async Task OnLoginSubmitAsync()
+    {
+        bool isValid = editContext.Validate();
+
+        if (!isValid)
+        {
+            return;
+        }
+
+        var authResponse = await loginVM.OnLoginSubmit();
+
+        if (authResponse == null)
+        {
+            errorMessage = "Invalid User Name/Email Address and/or Password.";
+        }
+
+        await LocalStorageService.SetItemAsync<string>("authToken", authResponse.Token);
+        await LocalStorageService.SetItemAsync<string>("refreshToken", authResponse.RefreshToken);
+        ((JWTAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(authResponse.Token);
+    }
+
+    void OnResetSubmit()
+    {
+        loginVM = new LoginViewModel(HttpClient)
+        {
+            Identifier = "sroye98",
+            Password = "Saachir1!"
+        };
+        editContext = new EditContext(loginVM);
+    }
+}

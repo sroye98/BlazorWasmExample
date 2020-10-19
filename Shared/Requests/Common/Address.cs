@@ -12,7 +12,7 @@ namespace Shared.Requests.Common
         [Required, MaxLength(128)]
         public string Line1 { get; set; }
 
-        [Required, MaxLength(128)]
+        [MaxLength(128)]
         public string Line2 { get; set; }
 
         [Required, MaxLength(50)]

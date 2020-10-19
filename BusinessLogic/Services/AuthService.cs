@@ -553,7 +553,8 @@ namespace BusinessLogic.Services
 
                 if (!identityResult.Succeeded)
                 {
-                    throw new Exception("User was not registered");
+                    string errors = string.Join(" ", identityResult.Errors.Select(m => m.Description).ToArray());
+                    throw new Exception(errors);
                 }
 
                 if (!string.IsNullOrEmpty(role))

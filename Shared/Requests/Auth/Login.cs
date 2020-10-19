@@ -11,7 +11,7 @@ namespace Shared.Requests.Auth
         [Required, DataType(DataType.Text)]
         public string Identifier { get; set; }
 
-        [Required]
+        [Required, DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

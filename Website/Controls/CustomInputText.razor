@@ -1,0 +1,7 @@
+﻿@inherits Microsoft.AspNetCore.Components.Forms.InputText
+
+<input @attributes="@(AdditionalAttributes)" class="@(CssClass.Replace(" valid", " is-success").Replace(" invalid", " is-danger"))" @bind="@(CurrentValueAsString)" />
+
+@code {
+
+}

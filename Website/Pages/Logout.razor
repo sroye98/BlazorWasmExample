@@ -1,0 +1,15 @@
+﻿@page "/logout"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ILocalStorageService LocalStorageService
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await LocalStorageService.RemoveItemAsync("authToken");
+        await LocalStorageService.RemoveItemAsync("refreshToken");
+        await ((JWTAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOutAsync();
+
+        NavigationManager.NavigateTo("/");
+    }
+}
