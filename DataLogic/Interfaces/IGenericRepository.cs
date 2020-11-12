@@ -21,7 +21,7 @@ namespace DataLogic.Interfaces
             Guid id,
             string[] projections = null);
 
-        Task<IEnumerable<TEntity>> GetAsync(
+        Task<List<TEntity>> GetAsync(
             string sortColumn,
             Func<TEntity, bool> whereClause,
             bool descending = true,

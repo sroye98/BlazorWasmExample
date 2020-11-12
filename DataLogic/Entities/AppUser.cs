@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using DataLogic.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace DataLogic.Entities
 {
-    public class AppUser : IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>, IEntity
     {
         public AppUser()
         {

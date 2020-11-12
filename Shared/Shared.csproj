@@ -14,6 +14,7 @@
     <Folder Include="Requests\Common\" />
     <Folder Include="Constants\" />
     <Folder Include="Responses\Weather\" />
+    <Folder Include="Requests\AppUsers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />

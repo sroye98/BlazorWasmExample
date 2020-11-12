@@ -151,6 +151,8 @@ namespace Server
                 endpoints.MapControllers();
             });
 
+
+            // Seed Data
             CreateRoleAsync(
                 svc,
                 Shared.Constants.Roles.Administrator).GetAwaiter().GetResult();

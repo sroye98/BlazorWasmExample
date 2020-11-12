@@ -125,7 +125,7 @@ namespace DataLogic.Repositories
             }
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync(
+        public Task<List<TEntity>> GetAsync(
             string sortColumn,
             Func<TEntity, bool> whereClause,
             bool descending = true,
@@ -159,9 +159,9 @@ namespace DataLogic.Repositories
                         query.OrderBy(m => m.GetPropValue(sortColumn));
                 }
 
-                List<TEntity> entities = await query.ToListAsync();
+                List<TEntity> entities = query.ToList();
 
-                return entities;
+                return Task.FromResult(entities);
             }
             catch (Exception ex)
             {

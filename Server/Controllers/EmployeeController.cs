@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using DataLogic.Entities;
+using DataLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Requests.Common;
 using Shared.Requests.Employee;
 
 namespace Server.Controllers
@@ -13,9 +16,13 @@ namespace Server.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeSvc;
+        private readonly IGenericRepository<Employee> _employeeRepo;
 
-        public EmployeeController(IEmployeeService employeeSvc)
+        public EmployeeController(
+            IEmployeeService employeeSvc,
+            IGenericRepository<Employee> employeeRepo)
         {
+            _employeeRepo = employeeRepo;
             _employeeSvc = employeeSvc;
         }
 
@@ -47,6 +54,37 @@ namespace Server.Controllers
                     payload.Password);
 
                 return Ok(newEmployee);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetEmployeesAsync([FromQuery] PagingOptions payload)
+        {
+            try
+            {
+                bool whereClause(Employee m) => m.AppUser.FullName.Contains(payload.SearchQuery);
+
+                var count = await _employeeRepo.CountAsync(whereClause);
+
+                var data = await _employeeRepo.GetAsync(
+                    payload.SortColumn,
+                    whereClause,
+                    payload.DescendingOrder,
+                    payload.PageSize,
+                    payload.Projections,
+                    payload.Skip);
+
+                return Ok(
+                    new
+                    {
+                        data,
+                        count
+                    });
             }
             catch (Exception ex)
             {
